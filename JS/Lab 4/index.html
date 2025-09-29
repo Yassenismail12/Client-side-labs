@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="js.js"></script>
+    <title>DOM</title>
+    <style>
+      .target-div {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-top: 10px;
+      }
+      .class-a {
+        background-color: yellow;
+        color: black;
+      }
+      .class-b {
+        background-color: blue;
+        color: white;
+      }
+      .hidden {
+        display: none;
+      }
+            .slider-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin: 20px auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .slide:nth-child(1) { background: linear-gradient(45deg, #ff6b6b, #ee5a24); }
+        .slide:nth-child(2) { background: linear-gradient(45deg, #4834d4, #686de0); }
+        .slide:nth-child(3) { background: linear-gradient(45deg, #00d2d3, #54a0ff); }
+        .slide:nth-child(4) { background: linear-gradient(45deg, #5f27cd, #a55eea); }
+        .slide:nth-child(5) { background: linear-gradient(45deg, #00d084, #26de81); }
+
+        .slider-controls {
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+  </head>
+  <body>
+    <h1>Day4 DOM</h1>
+    <div id="my-div">
+      <p id="my-p">Hello ISI</p>
+    </div>
+    <form id="main-form" action="test.html">
+      <input type="text" id="my-input" placeholder="Type something..." />
+      <input
+        type="email"
+        name="user-email"
+        id="my-email"
+        placeholder="Type your email..."
+      />
+      <select name="user-country" id="my-select">
+        <option value="us">United States</option>
+        <option value="EG">Egypt</option>
+        <option value="uk">United Kingdom</option>
+      </select>
+      <br />
+      <button type="submit">Submit</button>
+    </form>
+    <div class="target-div" id="div-2">
+      <h3>create element using js</h3>
+      <p>
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque,
+        reiciendis!
+      </p>
+    </div>
+     <!-- 8 -->
+        <div class="exercise-section">
+            <h3>Gallery</h3>
+            <div class="slider-container">
+                <div class="slider" id="image-slider">
+                    <div class="slide">Slide 1 </div>
+                    <div class="slide">Slide 2 </div>
+                    <div class="slide">Slide 3 </div>
+                    <div class="slide">Slide 4 </div>
+                    <div class="slide">Slide 5 </div>
+                </div>
+            </div>
+            <div class="slider-controls">
+                <button onclick="prevSlide()">Previous</button>
+                <button onclick="startSlider()">Start</button>
+                <button onclick="stopSlider()">Stop</button>
+                <button onclick="nextSlide()">Next</button>
+            </div>
+        </div>
+           <!-- Task 25: Wrapper for insertion -->
+        <div id="wrapper">
+            <p id="first">First</p>
+            <p id="second">Second</p>
+        </div>
+    <script>
+      //Assignment
+      //1
+      console.log(document.getElementsByTagName("div")[0].innerHTML);
+      //2
+      var x = document.getElementById("my-p")
+      x.innerText = "Hello DOM"
+      //3
+      var o = document.querySelector(".target-div")
+      console.log(o);
+      //4
+      var s = document.querySelectorAll("div")
+      console.log(s.length);
+      //5
+      var f = document.getElementsByName("user-email")
+      f.value="user@test.com"      
+      //6
+      var c = document.getElementById("my-input")
+      if (!c.hasAttribute("name")){
+        c.setAttribute("name","user-name")
+      }
+      //7 
+      var g = document.getElementById("my-p")
+      g.innerText += " - UPDATED"
+      //8
+    
+      var currentSlide = 0;
+      var sliderInterval;
+      var slider = document.getElementById('image-slider');
+      var totalSlides = 5;
+
+      function showSlide(index) {
+          var translateX = -index * 100;
+          slider.style.transform = `translateX(${translateX}%)`;
+      }
+
+      function nextSlide() {
+          currentSlide = (currentSlide + 1) % totalSlides;
+          showSlide(currentSlide);
+      }
+
+      function prevSlide() {
+          currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+          showSlide(currentSlide);
+      }
+
+      function startSlider() {
+          stopSlider(); 
+          sliderInterval = setInterval(nextSlide, 2000);
+      }
+
+      function stopSlider() {
+          if (sliderInterval) {
+              clearInterval(sliderInterval);
+              sliderInterval = null;
+          }
+      }
+    //9
+    c.setAttribute('placeholder', 'Type your full name');
+
+    //10
+    var e = document.getElementById("my-email")
+      if (!e.hasAttribute("required")){
+        console.log("Missing");
+        e.setAttribute("required","True")
+      }
+
+    //11
+      function getSelectedValue(selectId) {
+          var selectElement = document.getElementById(selectId);
+          return selectElement.value;
+      }
+    
+      //12
+        var selectElement = document.getElementById('my-select');
+        for (var i = 0; i < selectElement.options.length; i++) {
+            var option = selectElement.options[i];
+            console.log('Option ' + (i + 1) + ': text="' + option.text + '", value="' + option.value + '"');
+        }        
+      
+        //13
+        selectElement.value="EG"
+
+        //14
+      function selectByText(selectId, text) {
+          var select = document.getElementById(selectId);
+          Array.from(select.options).forEach(option => {
+              if (option.text === text) {
+                  option.selected = true;
+              }
+          });
+      }
+      selectByText('my-select', 'United States');
+
+      //15
+      var div2 = document.getElementById('div-2');
+      div2.innerHTML = '<p><b>Bold Text</b></p>';
+
+      //16 
+      div2.classList.add('class-a', 'class-b');
+      div2.classList.remove('class-b');
+
+      //17
+      div2.classList.toggle('hidden'); // Hide
+      div2.classList.toggle('hidden'); // Show
+
+      //18
+      function insertAfter(refNode, newNode) {
+        refNode.parentNode.insertBefore(newNode, refNode.nextSibling);
+      }
+      
+      //19
+      var dynamicBox = document.createElement('div');
+      dynamicBox.innerText = 'Dynamic Box';
+      dynamicBox.style.backgroundColor = 'yellow';
+      dynamicBox.style.padding = '10px';
+      dynamicBox.style.margin = '5px 0';
+      dynamicBox.style.borderRadius = '5px';
+      div2.appendChild(dynamicBox);
+
+      //20
+      var newP = document.createElement('p');
+      newP.innerText = 'INSERTED BEFORE FIRST CHILD';
+      newP.style.color = 'red';
+      newP.style.fontWeight = 'bold';
+      div2.insertBefore(newP, div2.firstChild);
+
+      //21
+      div2.insertAdjacentHTML('afterend', '<span style="color: purple; font-weight: bold;">AFTER END</span>');
+
+      //22
+      var form = document.getElementById('main-form');
+      form.onsubmit = function(e) {
+          e.preventDefault();
+          var textValue = document.getElementById('my-input').value;
+          var emailValue = document.getElementById('my-email').value;
+          var selectValue = document.getElementById('my-select').value;
+          console.log('  Text:', textValue);
+          console.log('  Email:', emailValue);
+          console.log('  Select:', selectValue);
+      };
+
+      //23
+        c.addEventListener('input', function() {
+        console.log(this.value.length);
+      });
+
+      //24
+      function validateEmailSimple(value) {
+                return value.includes('@') && value.includes('.');
+            }
+      
+      console.log('  validateEmailSimple("user@test.com"):', validateEmailSimple("user@test.com")); // true
+      console.log('  validateEmailSimple("valid@email.org"):', validateEmailSimple("valid@email.org")); // true
+      console.log('  validateEmailSimple("invalid-email"):', validateEmailSimple("invalid-email")); // false
+      console.log('  validateEmailSimple("missing@domain"):', validateEmailSimple("missing@domain")); // false
+
+      //25
+      var tempElement = document.createElement('div');
+      tempElement.innerText = 'Temporary Element';
+      tempElement.style.background = 'lightcoral';
+      tempElement.style.padding = '10px';
+      div2.appendChild(tempElement);
+      
+      setTimeout(() => {
+          div2.removeChild(tempElement);
+      }, 2000);
+
+      var wrapperElement = document.createElement('p');
+      wrapperElement.innerText = 'Added to wrapper';
+      wrapperElement.style.background = 'lightgreen';
+      wrapperElement.style.padding = '5px';
+      document.getElementById('wrapper').appendChild(wrapperElement);
+
+      //26
+      var div2Clone = div2.cloneNode(true);
+      div2Clone.id = 'div-2-clone';
+      div2Clone.style.border = '2px dashed #007bff';
+      div2Clone.style.marginTop = '20px';
+      insertAfter(div2, div2Clone);
+
+      //27
+      function highlightInputs(form) {
+        var inputs = form.querySelectorAll('input[type="text"], input[type="email"]');
+        inputs.forEach(input => {
+              input.classList.add('highlight');
+        });
+      }
+      highlightInputs(form);
+
+      //28
+      function buildCard(title, content) {
+        var card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `<h3>${title}</h3><p>${content}</p>`;
+        return card;
+      }
+      
+      var card1 = buildCard('Card 1', 'This is the content of the first card.');
+      var card2 = buildCard('Card 2', 'This is the content of the second card.');
+      document.body.appendChild(card1);
+      document.body.appendChild(card2);
+
+      //29
+      document.body.addEventListener('click', function(e) {
+        if (e.target.closest('.card')) {
+          var card = e.target.closest('.card');
+          var title = card.querySelector('h3').textContent;
+        }
+      });
+
+      //31
+      var ul = document.createElement('ul');
+      ul.style.listStyleType = 'decimal';
+      ul.style.padding = '20px';
+      ul.style.margin = '20px 0';
+      ul.style.border = '2px solid #ddd';
+      ul.style.borderRadius = '8px';
+      ul.style.background = '#f9f9f9';
+
+      for (var i = 1; i <= 10; i++) {
+          var li = document.createElement('li');
+          li.textContent = `List Item ${i}`;
+          li.className = i % 2 === 1 ? 'odd' : 'even';
+          ul.appendChild(li);
+      }
+      
+      var listTitle = document.createElement('h3');
+      listTitle.textContent = 'Hello';
+      document.body.appendChild(listTitle);
+      document.body.appendChild(ul);
+
+    </script>
+    <script>
+      // Getting elements > getElementsByTagName, getElementsByName, getElementById, querySelector
+      
+      // Working with select/options > options, innerText, hasAttribute, selected
+
+      //   document.getElementById("my-p").innerHTML += "<span> Hello </span>";
+      //   console.log(document.getElementById("my-div").nodeName === "DIV");
+      //   console.log(document.getElementsByTagName("div")[0]);
+      //   document.getElementsByName("user-name")[0].placeholder = "say your name";
+      //   document.getElementsByName("user-name")[0].value = "kareem";
+      //   console.log(document.forms[0].elements[2].options);
+      //   document.forms[0].elements[2].options[2].selected = true;
+      //   console.log( document.querySelector(".target-div").innerHTML += "<a href='#'>google</a>"  )
+      //   console.log( document.querySelectorAll("div")[0]  )
+
+      // Modifying elements > innerHTML, placeholder, setAttribute, innerText
+      // Class manipulation > classList.add, classList.remove, classList.toggle, classList.replace
+
+      // document.querySelector("[type = text]").setAttribute("name", "user-name")
+      //   //   console.log(  document.querySelector("[type = text]").hasAttribute("name"))
+      //   document.getElementById("div-2").className = " aly";
+      //   document.getElementById("div-2").classList.add("new-div-class");
+      //   document.getElementById("div-2").classList.remove("aly");
+      //   document.getElementById("div-2").classList.toggle("hidden");
+      //   document.getElementById("div-2").classList.toggle("hidden");
+      //   console.log(document.getElementById("div-2"));
+
+      // Form events > onsubmit
+
+      //   document.forms[0].onsubmit = funA;
+      //     function funA(){
+      //         alert("hello")
+      //     }
+
+      // Creating elements > createElement
+      // DOM insertion > appendChild, insertBefore, insertAdjacentElement
+
+      var myDiv = document.createElement("div");
+      myDiv.innerText = "Hello World";
+      var targeDiv = document.getElementById("div-2");
+        targeDiv.appendChild(myDiv);
+
+    //   beforeBegin, afterBegin, beforEend, afterEnd
+    //   targeDiv.insertAdjacentElement("afterend", myDiv);
+        myDiv.style.backgroundColor = "red"
+        myDiv.style.height = "100px"
+        myDiv.style.borderTopLeftRadius = "30px" //border-top-left-radius
+    //   Style manipulation > style.borderTopLeftRadius
+
+
+      // DOM removal > removeChild
+    //   myDiv.remove()
+        targeDiv.removeChild(myDiv)
+
+    </script>
+  </body>
+</html>

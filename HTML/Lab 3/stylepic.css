@@ -1,0 +1,14 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+div {
+    position: relative;
+}
+p{
+    color: azure;
+    background-color: rgba(0, 0, 0, 0.215);
+    position: absolute;
+    bottom: 50px;
+    left: 100px;
+}

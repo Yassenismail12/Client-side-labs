@@ -1,0 +1,63 @@
+p,div,span {
+    font-family: 'Lucida Calligraphy';
+}
+
+div h1 {
+    text-align: center;
+}
+
+div#header
+{
+    width: 100%;
+    height: 60px;
+    background-color: red;
+}
+span#linksbar{
+    width: 25%;
+    background-color: grey;
+    float: left;
+}
+span#content{
+    width: 75%;
+    height: 70%;
+    background-color: pink;
+    float: left;
+}
+.none-bullet-list {
+    list-style-type: none;
+}
+span#linksbar li a{
+    color: red;
+    background-color: pink;
+    text-decoration: none;
+}
+span#linksbar li a:hover{
+    color: pink;
+    background-color: red;
+    text-decoration: none;
+}
+
+span#content h2+p{
+    font-weight: bold;
+    font-size: 12px;
+}
+
+div#loginform{
+    border: 2px dashed rgb(20,70,60);
+}
+
+[type=text]{
+    background-color: yellow;
+}
+[type=text]:focus{
+    background-color: rgb(255, 255, 255);
+}
+.tabled-bordered{
+    display:table-cell;
+    padding: 5px;
+    border: 2px solid black;
+}
+span.tabled-bordered::after{
+    content: "Read This";
+    color: yellow;
+}

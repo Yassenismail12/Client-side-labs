@@ -1,0 +1,47 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+.team-table {
+    border-collapse: collapse;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #333;
+}
+
+.team-table th {
+    background-color: #2f5d8a;
+    color: white;
+    padding: 10px;
+    border: 1px solid #333;
+    text-align: left;
+}
+
+.team-table td {
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+}
+
+.team-name {
+    background-color: #d8e6f3;
+    padding: 2px 5px;
+    margin-left: 5px;
+}
+
+.team-table a {
+    color: #2f5d8a;
+    text-decoration: none;
+    font-style: italic;
+}
+
+.team-table a:hover {
+    text-decoration: underline;
+}
+
+.info-row td {
+    background-color: #f2f2f2;
+    text-align: center;
+    font-style: italic;
+}

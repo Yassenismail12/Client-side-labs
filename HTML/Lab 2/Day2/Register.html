@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<body>
+    <center>
+        <h1>
+            Registeration Form
+        </h1>
+    </center>
+    <form action="./Thankyou.html">
+        <center>
+        <label for="first-name">First Name: </label>
+        <input name="first-name" type="text">
+        <br>
+        <br>
+        <label for="last-name">Last Name: </label>
+        <input name="last-name" type="text">
+        <br>
+        <br>
+        <label for="Email">Email: </label>
+        <input name="Email" type="email" required>
+        <br>
+        <br>
+        <label for="password">Password: </label>
+        <input name="password" type="password">
+        <br>
+        <br>
+        <label for="r-password">Repeat Password: </label>
+        <input name="r-password" type="password">
+        <br>
+        <br>
+        <label for="bdate">Date of birth: </label>
+        <input name="bdate" type="date">
+        <br>
+        <br>
+        <label for="pic">Profile Picture: </label>
+        <input name="pic" type="file" accept=".png">
+        <br>
+        <br>
+        <label for="gender">Gender: </label>
+        <input type="radio" name="gender" value="male"> Male
+        <input type="radio" name="gender" value="female"> Female
+        <input type="radio" name="gender" value="other"> Other 
+        <br>
+        <br>
+        <label for="Faculty">Faculty: </label>
+        <select id="Faculty" name="Faculty">
+            <option value="">&lt;--Select Faculty--&gt;</option>
+            <option value="FCAI">Faculty Of Computers And Artificial intelligence</option>
+            <option value="FE">Faculty Of Engineering</option>
+            <option value="FA">Faculty Of AI</option>
+        </select>
+        <br>
+        <br>
+        <label for="Interstes">Interstes: </label>
+        <input type="checkbox" name="Interstes"> Programming 
+        <input type="checkbox" name="Interstes"> Swimming 
+        <input type="checkbox" name="Interstes"> Fishing 
+        <input type="checkbox" name="Interstes"> Reading 
+        <br>
+        <br>
+        <label for="About">About Me:</label><br>
+        <textarea id="About" name="About" rows="4" cols="50">
+        Type Here...
+        </textarea>
+        <br>
+        <br>
+        <input type="checkbox" name="Interstes"> <b>I agree to the Terms & Conditions</b>
+        <br>
+        <br>
+        <input type="submit" value="Submit" >
+        <input type="reset" value="Clear">
+        </center>
+    </form>
+</body>
+</html>

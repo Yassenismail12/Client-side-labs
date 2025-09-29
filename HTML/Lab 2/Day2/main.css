@@ -1,0 +1,30 @@
+p {
+    color: red;
+}
+p , div {
+    color: darkblue;
+}
+
+#mydiv > p.mainClass{
+    color: tomato;
+}
+
+div p{
+    font-style: italic;
+}
+
+[type=text].myClass {
+    background-color: aqua;
+}
+
+div ~ span {
+    background-color: blueviolet;
+}
+
+p.myClass {
+    background-color: rgb(20, 177, 164);
+}
+
+#mydiv{
+    background-color: thistle;
+}

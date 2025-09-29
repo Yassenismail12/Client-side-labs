@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedList</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            gap: 30px;
+        }
+
+        .controls {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .controls h2 {
+            margin-bottom: 10px;
+            color: #4a90e2;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        input[type="text"] {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 12px 20px;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #357bd8;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 12px;
+            background-color: #e8f4fd;
+            border-radius: 6px;
+            min-height: 40px;
+        }
+
+        .visualization {
+            flex: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            overflow-x: auto;
+            padding: 20px;
+            background-color: #fafafa;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        #list-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 100px;
+        }
+
+        .node {
+            background-color: #ffffff;
+            border: 2px solid #4a90e2;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            min-width: 80px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: relative;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .node.highlight {
+            background-color: #fffacd;
+            border-color: #ffd700;
+            animation: highlight 1s ease-in-out;
+        }
+
+        .node.remove {
+            animation: fadeOut 0.5s ease-in-out forwards;
+        }
+
+        .arrow {
+            font-size: 24px;
+            color: #4a90e2;
+            margin: 0 10px;
+            animation: arrowSlide 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-20px); }
+        }
+
+        @keyframes highlight {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes arrowSlide {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
+                flex-direction: column;
+            }
+
+            .visualization {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="controls">
+            <h2>LinkedList Operations</h2>
+            <div class="input-group">
+                <label for="value">Value:</label>
+                <input type="text" id="value" placeholder="Enter a value">
+            </div>
+            <button onclick="append()">Append</button>
+            <button onclick="prepend()">Prepend</button>
+            <button onclick="find()">Find</button>
+            <button onclick="remove()">Remove</button>
+            <div id="result"></div>
+        </div>
+        <div class="visualization">
+            <h2>Visualization</h2>
+            <div id="list-container"></div>
+        </div>
+    </div>
+
+    <script>
+        class Node {
+            constructor(data) {
+                this.data = data;
+                this.next = null;
+            }
+        }
+
+        class LinkedList {
+            constructor() {
+                this.head = null;
+            }
+
+            append(data) {
+                const newNode = new Node(data);
+                if (!this.head) {
+                    this.head = newNode;
+                } else {
+                    let current = this.head;
+                    while (current.next) {
+                        current = current.next;
+                    }
+                    current.next = newNode;
+                }
+            }
+
+            prepend(data) {
+                const newNode = new Node(data);
+                newNode.next = this.head;
+                this.head = newNode;
+            }
+
+            find(data) {
+                let current = this.head;
+                let position = 0;
+                while (current) {
+                    if (current.data === data) {
+                        return position;
+                    }
+                    current = current.next;
+                    position++;
+                }
+                return -1;
+            }
+
+            remove(data) {
+                if (!this.head) return false;
+                if (this.head.data === data) {
+                    this.head = this.head.next;
+                    return true;
+                }
+                let current = this.head;
+                while (current.next) {
+                    if (current.next.data === data) {
+                        current.next = current.next.next;
+                        return true;
+                    }
+                    current = current.next;
+                }
+                return false;
+            }
+        }
+
+        const ll = new LinkedList();
+        const resultDiv = document.getElementById('result');
+        const listContainer = document.getElementById('list-container');
+
+        function getValue() {
+            const input = document.getElementById('value');
+            const value = input.value.trim();
+            input.value = '';
+            return value;
+        }
+
+        function renderList(highlightData = null) {
+            listContainer.innerHTML = '';
+            let current = ll.head;
+            while (current) {
+                const nodeDiv = document.createElement('div');
+                nodeDiv.classList.add('node');
+                nodeDiv.textContent = current.data;
+                if (current.data === highlightData) {
+                    nodeDiv.classList.add('highlight');
+                }
+                listContainer.appendChild(nodeDiv);
+
+                if (current.next) {
+                    const arrow = document.createElement('span');
+                    arrow.classList.add('arrow');
+                    arrow.textContent = '→';
+                    listContainer.appendChild(arrow);
+                }
+
+                current = current.next;
+            }
+        }
+
+        function append() {
+            const value = getValue();
+            if (value) {
+                ll.append(value);
+                renderList();
+                resultDiv.textContent = `Appended: ${value}`;
+            }
+        }
+
+        function prepend() {
+            const value = getValue();
+            if (value) {
+                ll.prepend(value);
+                renderList();
+                resultDiv.textContent = `Prepended: ${value}`;
+            }
+        }
+
+        function find() {
+            const value = getValue();
+            if (value) {
+                const position = ll.find(value);
+                if (position !== -1) {
+                    renderList(value);
+                    resultDiv.textContent = `Found "${value}" at position ${position}`;
+                    setTimeout(() => renderList(), 2000);
+                } else {
+                    resultDiv.textContent = `"${value}" not found`;
+                }
+            }
+        }
+
+        function remove() {
+            const value = getValue();
+            if (value) {
+                const removed = ll.remove(value);
+                if (removed) {
+                    let tempNodes = [];
+                    let current = ll.head;
+                    while (current) {
+                        tempNodes.push(current.data);
+                        current = current.next;
+                    }
+                    renderList();
+                    const nodes = document.querySelectorAll('.node');
+                    nodes.forEach(node => {
+                        if (node.textContent === value) {
+                            node.classList.add('remove');
+                        }
+                    });
+                    setTimeout(() => {
+                        renderList();
+                        resultDiv.textContent = `Removed: ${value}`;
+                    }, 500);
+                } else {
+                    resultDiv.textContent = `"${value}" not found`;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
